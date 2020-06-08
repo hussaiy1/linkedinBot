@@ -1,0 +1,36 @@
+
+
+How to run Linkedin bot
+
+Please watch videos to see the following steps:
+
+PART 1
+
+1. Go to the search bar in the bottom left off the window. Search "Command Prompt"
+2. Open "Comand Prompt"
+3. In Commant Prompt type cd
+4. Drag and drop the linkedin folder from Desktop to Command Prompt and press enter.
+5. After 30sec, bot will ask you for Search Criteria. Type your search in Command Prompt only.
+6. Bot will display a set of search results. You now have 5mins to use advanced search techniques.
+7. After 5mins the bot will continue to run.
+
+PART 2
+
+1. You can start partt 2 once you see the following: 
+
+	YOU CAN NOW START CONNECTING WITH THE SCAPED CANDIDATES
+	PLEASE RUN THE FOLLOWING COMMAND: 
+	python3 connectOnly.py
+	
+2. If you need to change the message on the connects please go to the Linkedin folder on the Desktop and open file 'message.json' in notepad or notepad ++.
+	You will be able to type your message between the double quotes (") after "msg" :
+	Please note to start a new line you use \n . 
+
+3. To start part 2. You will need to run the following in command prompt:
+
+	python3 connectOnly.py
+	
+This will now connect you with the candidates.
+
+
+	
