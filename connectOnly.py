@@ -9,6 +9,8 @@ from os import system
 import json
 from datetime import datetime
 from colorama import init, Fore, Back, Style
+from linkedin_api import Linkedin
+
 
 init(autoreset=True)
 
@@ -61,6 +63,18 @@ def writePending():
         for i in range(len(pending)):
             f.write(pending[i]+ '\n')
         f.close()
+
+
+def getName(account, link):
+    api = Linkedin(account, 'Europa007')
+    theURL = link.replace("\n", "")
+    id = theURL.split("/")[4]
+    profile = api.get_profile(id)
+    lastname = profile['lastName']
+    firstname = profile['firstName']
+    name = "{} {}".format(firstname, lastname)
+    return name
+
 accountNumb = 0
 account=userAccounts[accountNumb]
 profileLinks()
@@ -82,27 +96,27 @@ for i in range(len(profiles)):
     logger.info('Searching for CONNECT button - ' + profiles[i])
     dateTimeObj = datetime.now()
     print(Fore.YELLOW + '[{}] Searching for CONNECT button...... '.format(str(dateTimeObj)))
+    name = getName(userAccounts[accountNumb], profiles[i])
     if searchConnect != None:
         try:
             t.sleep(4)
             login.connect2()
             logger.info('Using Connect2 function - ' + profiles[i])
-            login.message(text['msg'])
+            connectMsg = text['jobTitle'] + '\n' + text['greeting'] + ' ' + name + ',\n' + text['msg']
+            login.message(connectMsg)
             logger.info('Message Sent - ' + profiles[i])
             dateTimeObj = datetime.now()
-            print(Fore.GREEN + '[{}] Message Sent -'.format(str(dateTimeObj)))
+            print(Fore.GREEN + '[{}] Message Sent to {}'.format(str(dateTimeObj), name))
             success.append(profiles[i])
             accountCounter += 1
 
         except NoSuchElementException:
-            print('Maybe Connection Request Already Sent')
             dateTimeObj = datetime.now()
             print(Fore.YELLOW + '[{}] Maybe Connection Request Already Sent -'.format(str(dateTimeObj)))
             logger.info('Failed to CONNECT2 - ' + profiles[i])
             pending.append(profiles[i])
 
         except ElementNotInteractableException:
-            print('Failed to Connect1 - element not interactable')
             logger.info('Failed to CONNECT1 - element not interactable - ' + profiles[i])
             dateTimeObj = datetime.now()
             print(Fore.RED + '[{}] Failed to Connect - element not interactable -'.format(str(dateTimeObj)))
@@ -113,25 +127,24 @@ for i in range(len(profiles)):
             t.sleep(4)
             login.connect1()
             logger.info('Using Connect1 function - ' + profiles[i])
-            login.message(text['msg'])
+            connectMsg = text['jobTitle'] + '\n' + text['greeting'] + ' ' + name + ',\n' + text['msg']
+            login.message(connectMsg)
             logger.info('Message Sent - ' + profiles[i])
             dateTimeObj = datetime.now()
-            print(Fore.GREEN + '[{}] Message Sent - '.format(str(dateTimeObj)))
+            print(Fore.GREEN + '[{}] Message Sent to {}'.format(str(dateTimeObj), name))
             success.append(profiles[i])
             accountCounter += 1
         except NoSuchElementException:
-            print('Maybe Connection Request Already Sent')
             dateTimeObj = datetime.now()
             print(Fore.YELLOW + '[{}] Maybe Connection Request Already Sent - '.format(str(dateTimeObj)))
             logger.info('Failed to CONNECT1 - ' + profiles[i])
             pending.append(profiles[i])
         except ElementNotInteractableException:
-            print('Failed to Connect1 - element not interactable')
             dateTimeObj = datetime.now()
             print(Fore.RED + '[{}] Failed to Connect - element not interactable - '.format(str(dateTimeObj)))
             logger.info('Failed to CONNECT1 - element not interactable - ' + profiles[i])
             fail.append(profiles[i])
-    print(Fore.GREEN + '[{}] Changing Accounts using {} '.format(str(dateTimeObj), accountCounter))
+    print(Fore.GREEN + '[{}] Moving to next account, no. of account messaged so far: {} '.format(str(dateTimeObj), accountCounter))
     if accountCounter%100==0:
         accountNumb += 1
         if accountNumb == (len(userAccounts)):
