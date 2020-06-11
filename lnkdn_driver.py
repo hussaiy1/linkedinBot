@@ -2,10 +2,16 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 import time
+import os
+import sys
+import shutil
 
 class webDriver(object):
     ##Install Chrome driver using ChromeDriverManager
     def __init__(self):
+        home = os.path.expanduser('~')
+        user = home.split('/')[2]
+        shutil.rmtree('/Users/{}/.wdm/drivers/chromedriver'.format(user))
         self.driver = webdriver.Chrome(ChromeDriverManager().install())
     ##Linkedin Login
     def login(self,usrname, pwrd):
@@ -31,7 +37,7 @@ class webDriver(object):
     def message(self,msg):
         self.driver.find_element_by_xpath("//button[@class='mr1 artdeco-button artdeco-button--muted artdeco-button--3 artdeco-button--secondary ember-view']").click()
         self.driver.find_element_by_name('message').send_keys(msg)
-        self.driver.find_element_by_xpath("//button[@class='ml1 artdeco-button artdeco-button--3 artdeco-button--primary ember-view']").click()
+        #self.driver.find_element_by_xpath("//button[@class='ml1 artdeco-button artdeco-button--3 artdeco-button--primary ember-view']").click()
     
     def souper(self, url2):
         self.driver.get(url2)
