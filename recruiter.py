@@ -11,6 +11,9 @@ init(autoreset=True)
 class recruiterDriver(object):
 
     def __init__(self):
+        home = os.path.expanduser('~')
+        user = home.split('/')[2]
+        shutil.rmtree('/Users/{}/.wdm/drivers/chromedriver'.format(user))
         self.driver = webdriver.Chrome(ChromeDriverManager().install())
     
     def login(self,usrname, pwrd):
