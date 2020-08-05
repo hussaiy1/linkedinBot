@@ -74,7 +74,7 @@ headcount=0
 if __name__ == "__main__":
     while(headcount==0):
         recruiter=recruiterDriver()
-        recruiter.login('richard.abbott@europa-it-search.com','Europa007')
+        recruiter.login('xxxxxxxxxxxxxxxx@xxxxxxxxxx.com','xxxxxxxxxxxxxxxxx')
         logger.info('Logging In ...')
         dateTimeObj = datetime.now()
         print(Fore.GREEN + '[{}] Logging In... '.format(str(dateTimeObj)))
