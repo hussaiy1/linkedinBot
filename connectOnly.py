@@ -36,7 +36,16 @@ success=[]
 fail=[]
 pending=[]
 text=[]
-userAccounts=['Accounts go here']
+userAccounts=[]
+
+with open('settings/settings.json', 'r') as jsonf:
+    user = json.load(jsonf)
+
+
+for i in range(len(user)):
+    user_numb = 'user' + str(i) 
+    userAccounts.append(user[user_numb])
+
 with open('message.json', 'r') as jsonf:
     text=json.load(jsonf)
 
@@ -81,7 +90,7 @@ profileLinks()
 logger.info('Links have been appended to the profiles list')
 
 login=webDriver()
-login.login(account,'password for account')
+login.login(account,'Europa007')
 logger.info('Logging In ...')
 dateTimeObj = datetime.now()
 print(Fore.GREEN + '[{}] Logging In... '.format(str(dateTimeObj)))
